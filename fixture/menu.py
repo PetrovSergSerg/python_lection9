@@ -11,7 +11,8 @@ class MenuHelper:
                              'manage_prof_menu_page.php'
                              'manage_plugin_page.php'
                              'adm_config_report.php']
-        if wd.current_url not in manage_list_pages:
+
+        if wd.current_url[wd.current_url.rfind("/")+1:] not in manage_list_pages:
             wd.find_element_by_link_text("Manage").click()
 
         if len(wd.find_elements_by_name("reauth_form")) > 0:
@@ -19,6 +20,6 @@ class MenuHelper:
 
     def manage_projects(self):
         wd = self.app.wd
-        if wd.current_url != 'manage_proj_page.php':
+        if not wd.current_url.endswith('manage_proj_page.php'):
             self.__manage()
             wd.find_element_by_link_text("Manage Projects").click()
