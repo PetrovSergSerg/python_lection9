@@ -21,6 +21,7 @@ class ProjectHelper:
 
         self.menu.manage_projects()
 
+    # TODO
     def edit(self, to: Project):
         pass
 

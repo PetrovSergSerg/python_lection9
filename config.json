@@ -15,5 +15,10 @@
       "user": "root",
       "password": ""
     }
+  },
+  "ftp": {
+    "host": "localhost",
+    "user": "mantis",
+    "password": "mantis"
   }
 }
