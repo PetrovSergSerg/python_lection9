@@ -2,7 +2,6 @@ import pytest
 import json
 import os.path
 import importlib
-import jsonpickle
 import ftputil
 from fixture.application import Application
 from fixture.orm import ORMFixture
@@ -94,10 +93,16 @@ def check_ui(request):
     return request.config.getoption("--check_ui")
 
 
+@pytest.fixture()
+def check_soap(request):
+    return request.config.getoption("--check_soap")
+
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--config", action="store", default="config.json")
     parser.addoption("--check_ui", action="store")
+    parser.addoption("--check_soap", action="store")
 
 
 def pytest_generate_tests(metafunc):
@@ -105,16 +110,8 @@ def pytest_generate_tests(metafunc):
         if fixture.startswith("data_"):
             testdata = load_from_module(fixture[5:])
             metafunc.parametrize(fixture, testdata, ids=[repr(p) for p in testdata])
-        elif fixture.startswith("json_"):
-            testdata = load_from_json(fixture[5:])
-            metafunc.parametrize(fixture, testdata, ids=[repr(g) for g in testdata])
 
 
 def load_from_module(module):
     obj = importlib.import_module(f'data.{module}')
     return obj.testdata
-
-
-def load_from_json(jsonfile):
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/{jsonfile}.json')) as file:
-        return jsonpickle.decode(file.read())

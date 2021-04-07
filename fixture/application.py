@@ -2,6 +2,7 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.project import ProjectHelper
 from fixture.menu import MenuHelper
+from fixture.soap import SoapHelper
 
 
 class Application:
@@ -16,9 +17,10 @@ class Application:
             self.wd = webdriver.Ie()
         else:
             raise ValueError(f'Unrecognized browser {browser}\nBrowser should be [firefox|chrome|edge]')
-        self.wd.implicitly_wait(0.1)
+        self.wd.implicitly_wait(0.5)
         self.session = SessionHelper(self)
         self.menu = MenuHelper(self)
+        self.soap = SoapHelper(self)
         self.config = config
         self.base_url = config["web"]["baseUrl"]
         self.project = ProjectHelper(self)
