@@ -7,9 +7,10 @@ from model.view_status import ViewStatus as view
 class SoapHelper:
     def __init__(self, app):
         self.app = app
+        self.config = app.config
 
     def get_project_list_for_user(self, username, password):
-        client = Client("http://localhost/mantisbt-1.2.20/api/soap/mantisconnect.php?wsdl")
+        client = Client(self.config['soap']['wsdl'])
 
         def convert(p):
             return Project(id=str(p.id), name=p.name, status=ps.get_projectstatus_by_id(p.status.id),

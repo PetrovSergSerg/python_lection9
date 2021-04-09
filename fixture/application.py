@@ -20,10 +20,10 @@ class Application:
         self.wd.implicitly_wait(0.5)
         self.session = SessionHelper(self)
         self.menu = MenuHelper(self)
-        self.soap = SoapHelper(self)
         self.config = config
         self.base_url = config["web"]["baseUrl"]
         self.project = ProjectHelper(self)
+        self.soap = SoapHelper(self)
 
     def is_valid(self):
         try:
